@@ -47,17 +47,27 @@
         .section { margin-bottom: 2.8rem; }
         .section h2 { padding-bottom: 0.5rem; margin-bottom: 1.2rem; border-bottom: 3px solid; }
         
-        .guerras h2 { color: var(--green); border-color: var(--green); }
-        .politica h2 { color: #ffffff; border-color: #ffffff; }
-        .economia h2 { color: var(--yellow); border-color: var(--yellow); }
-        .memes h2 { color: var(--blue); border-color: var(--blue); }
+        /* Definição de cores por seção (afeta o h2 e os cards dentro dela) */
+        .guerras { color: var(--green); }
+        .guerras h2 { border-color: var(--green); }
+
+        .politica { color: var(--white); }
+        .politica h2 { border-color: var(--white); }
+
+        .economia { color: var(--yellow); }
+        .economia h2 { border-color: var(--yellow); }
+
+        .memes { color: var(--blue); }
+        .memes h2 { border-color: var(--blue); }
         
+        /* Card genérico que herda a cor do elemento pai */
         .card {
             background: var(--card);
             border-radius: 8px;
             padding: 1.6rem;
             margin-bottom: 1.2rem;
             border-left: 5px solid currentColor;
+            color: var(--text); /* Mantém o texto claro padrão */
         }
         
         .sidebar { 
@@ -67,6 +77,11 @@
             height: fit-content; 
             border: 1px solid #333;
             transition: transform 0.3s ease-in-out;
+        }
+
+        /* Sobrescrita para os cards da sidebar usarem a cor inline do style="" */
+        .sidebar .card {
+            border-left-color: currentColor;
         }
 
         .sidebar-header {
@@ -86,7 +101,6 @@
             line-height: 1;
         }
 
-        /* Botão Flutuante da Gaveta (Mobile Only) */
         .drawer-toggle {
             display: none;
             position: fixed;
@@ -105,7 +119,6 @@
             justify-content: center;
         }
 
-        /* Overlay escuro quando a gaveta abre */
         .sidebar-overlay {
             display: none;
             position: fixed;
@@ -122,44 +135,23 @@
         .country-display img { width: auto; height: 19px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.6); }
         .country-display .name { font-weight: 700; }
 
-        /* Media Query para Telas Mobile */
         @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr; /* Força uma coluna única no mobile */
-            }
-
-            .drawer-toggle {
-                display: flex; /* Exibe o botão flutuante */
-            }
-
-            /* Transforma a Sidebar em Gaveta Lateral */
+            .container { grid-template-columns: 1fr; }
+            .drawer-toggle { display: flex; }
             .sidebar {
                 position: fixed;
-                top: 0;
-                right: 0;
-                width: 280px;
-                height: 100vh;
+                top: 0; right: 0;
+                width: 280px; height: 100vh;
                 box-sizing: border-box;
                 z-index: 995;
-                border-radius: 0;
-                border: none;
+                border-radius: 0; border: none;
                 border-left: 1px solid #333;
-                transform: translateX(100%); /* Começa escondida na direita */
+                transform: translateX(100%);
                 overflow-y: auto;
             }
-
-            /* Classe ativada pelo JS para abrir a gaveta */
-            .sidebar.active {
-                transform: translateX(0);
-            }
-
-            .sidebar-overlay.active {
-                display: block;
-            }
-
-            .close-sidebar {
-                display: block; /* Mostra o botão de fechar dentro da gaveta */
-            }
+            .sidebar.active { transform: translateX(0); }
+            .sidebar-overlay.active { display: block; }
+            .close-sidebar { display: block; }
         }
     </style>
 </head>
@@ -170,28 +162,26 @@
         <p class="subtitle">Edição #1 atualizada em 12 de Julho de 2026 • Informando o Brasil ontem, hoje e amanhã</p>
     </header>
 
-    <!-- Botão da gaveta para telas mobile -->
     <button class="drawer-toggle" id="openDrawer" title="Resumo da Semana">📌</button>
-    <!-- Background fosco para isolar a gaveta quando aberta -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <div class="container">
         <div class="main">
-            <!-- Guerras -->
+            <!-- Guerras (Cards Verdes) -->
             <div class="section guerras">
                 <h2>⚔️ Guerras</h2>
-                <div class="card">
+                <div class="card" style="color: var(--green);">
                     <h3>Américas</h3>
                     <p>10/07 - [br] X [us]</p>
                 </div>
-                <div class="card">
+                <div class="card" style="color: var(--green);">
                     <h3>Europa</h3>
                     <p>10/07 - [br] X [pl]</p>
                     <p>07/07 - [br] X [lt] &emsp; <a href="https://app.warera.io/article/6a4d0f72110a2cc2aaf3884b" target="_blank" rel="noopener">Brazil declares total war against Lithuania</a></p>
                 </div>
             </div>
 
-            <!-- Política -->
+            <!-- Política (Cards Brancos) -->
             <div class="section politica">
                 <h2>⚖️ Política</h2>
                 <div class="card">
@@ -199,33 +189,33 @@
                 </div>
             </div>
 
-            <!-- Economia -->
+            <!-- Economia (Cards Amarelos) -->
             <div class="section economia">
                 <h2>💰 Economia</h2>
-                <div class="card">
+                <div class="card" style="color: var(--yellow);">
                     <p>12/07 - <a href="https://app.warera.io/article/6a4f304a585d9590b1cdbcd3" target="_blank" rel="noopener">Comunicado de Renta de Región: Colombia - Brasil</a></p>
                 </div>
-                <div class="card">
+                <div class="card" style="color: var(--yellow);">
                     <p>11/07 - <a href="https://app.warera.io/country/6813b6d546e731854c7ac82f/law/6a51a20522c0d30eb09f1485" target="_blank" rel="noopener">[br] aumenta imposto de renda para 5%</a></p>
                 </div>
             </div>
 
-            <!-- Memes -->
-            <div class="section memes">
+            <!-- Memes (Cards Azuis) -->
+            <div class="section memes" >
                 <h2>😂 Memes & Comunidade</h2>
-                <div class="card">
+                <div class="card" style="color: var(--blue);">
                     <p>12/07 - <a href="https://app.warera.io/article/6a5392086ec2c3e0ce31e3c9" target="_blank" rel="noopener">The Lithuania & Gnome! (BrMemes)</a></p>
                 </div>
-                <div class="card">
+                <div class="card" style="color: var(--blue);">
                     <p>09/07 - <a href="https://app.warera.io/article/6a4f1579a184797595a3d2cb" target="_blank" rel="noopener">Message for Lithuania (BrMemes)</a></p>
                 </div>
-                <div class="card">
+                <div class="card" style="color: var(--blue);">
                     <p>05/07 - <a href="https://app.warera.io/article/6a4db27cacf9f61f1b59ec81" target="_blank" rel="noopener">"Detestei conversa com o Rafael!" (Br Memes)</a></p>
                 </div>
             </div>
         </div>
 
-        <!-- Sidebar (Vira gaveta no mobile) -->
+        <!-- Sidebar -->
         <div class="sidebar" id="sidebarDrawer">
             <div class="sidebar-header">
                 <h2 style="color: var(--yellow); margin-top:0;">📌 Resumo da Semana</h2>
@@ -306,7 +296,6 @@
             });
         }
 
-        // Lógica de abertura/fechamento da Gaveta Mobile
         const openBtn = document.getElementById('openDrawer');
         const closeBtn = document.getElementById('closeDrawer');
         const sidebar = document.getElementById('sidebarDrawer');
